@@ -1,0 +1,39 @@
+[
+
+    {
+      "name":"关羽",
+      "weapon":"青龙偃月刀",
+      "job":"前将军",
+      "link":"http://baike.baidu.com/item/%E5%85%B3%E7%BE%BD/17338"
+    },
+    {
+      "name":"张飞",
+      "weapon":"丈八蛇矛",
+      "job":"右将军",
+      "link":"http://baike.baidu.com/item/%E5%BC%A0%E9%A3%9E/3622"
+    },
+    {
+      "name":"赵云",
+      "weapon":"豪龙胆",
+      "job":"虎威将军",
+      "link":"http://baike.baidu.com/item/%E8%B5%B5%E4%BA%91/6083"
+    },
+    {
+      "name":"马超",
+      "weapon":"龙骑尖",
+      "job":"左将军",
+      "link":"http://baike.baidu.com/item/%E9%A9%AC%E8%B6%85/1201"
+    },
+    {
+     "name":"黄忠",
+     "weapon":"钢背刀",
+     "job":"后将军",
+     "link":"http://baike.baidu.com/item/%E9%BB%84%E5%BF%A0/909"
+    },
+    {
+      "name":"诸葛亮",
+      "weapon":"军神羽扇",
+      "job":"军师将军",
+      "link":"http://baike.baidu.com/item/%E8%AF%B8%E8%91%9B%E4%BA%AE/21048"
+    }
+] 

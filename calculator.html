@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>在线计算器</title>
+		<style>
+			*{
+				margin: 0;
+			    padding: 0;
+			    color: #fff;
+			    font-family: "微软雅黑";
+			}
+			.content{
+				width: 280px;      /*70px*/
+				height: 510px;
+				margin: 0 auto;
+				background: #000;
+			}
+			.bar {
+				height: 20px;
+				width: 100%;
+				padding-top: 4px;
+				box-sizing: border-box;
+			}
+			.bar .close{
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: red;
+				text-align: center;
+				line-height: 10px;
+				float: right;
+				color: red;
+				font-size: 10px;
+				margin-right: 4px;
+				cursor: pointer;
+			}
+			.bar .close:hover{
+				color: #fff;
+			}
+			.screen{
+				width: 260px;
+				margin-left:10px;
+				line-height: 140px;
+				text-align: right;
+				height: 140px;
+				font-size: 40px;
+			    font-weight: lighter;
+			    overflow: hidden;
+			}
+			.btn{
+				width: 70px;
+				height: 70px;
+				background: #ddd;         
+				font-size: 24px;
+				text-align: center;
+				line-height: 70px;
+				float: left;
+				box-sizing: border-box;
+				border: 1px solid #000;
+				cursor: pointer;
+			}
+			.btn:nth-of-type(1),
+			.btn:nth-of-type(2),
+			.btn:nth-of-type(3){
+				background: #bbb;
+			}
+			.btn:nth-of-type(4n){
+				background: #ffb51c;
+			}
+			.btn:nth-of-type(17){
+				width: 140px;
+			}
+			.btn:nth-of-type(19){
+				background: #ffb51c;
+			}
+		</style>
+		<script src="js/jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<div class="content">
+			<div class="bar">
+				<div class=close>x</div>
+			</div>
+			<div class="screen"></div>
+			<div class="btn_con">
+				<div class="btn btn_reset">AC</div>
+				<div class="btn btn_negtive">+/-</div>
+				<div class="btn btn_delete">&larr;</div>
+				<div class="btn btn_divided calcu">÷</div>
+				<div class="btn num">7</div>
+				<div class="btn num">8</div>
+				<div class="btn num">9</div>
+				<div class="btn btn_multiplied calcu">×</div>
+				<div class="btn num">4</div>
+				<div class="btn num">5</div>
+				<div class="btn num">6</div>
+				<div class="btn btn_minus calcu">-</div>
+				<div class="btn num">1</div>
+				<div class="btn num">2</div>
+				<div class="btn num">3</div>
+				<div class="btn btn_plus calcu">+</div>
+				<div class="btn num">0</div>
+				<div class="btn num">.</div>
+				<div class="btn btn_equal">=</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				var src_show =$(".screen");         //屏幕显示
+				src_show.html("0");
+				var result ="",                          //输出结果
+				      result_1="",                      //第一个数字
+				      result_2 = "";                   //第二个数字
+				var change=0;                       //运算符
+				var num = $(".num");                 //数字键
+				var equal = $(".btn_equal");         //等于符
+				var calcu = $(".calcu");                 //运算符
+				var reset = $(".btn_reset");             //清零符
+				var negtive = $(".btn_negtive"),         //负号符
+				      neg=1;
+				var del = $(".btn_delete");                //退格符
+				//负号操作
+				negtive.click(function(){
+					if(src_show.text()=="0"){                      //当屏幕显示为0时
+						src_show.html("-0");
+						neg=0;
+					}else if(src_show.text()=="-0"){
+						src_show.html("0");
+						neg=1;
+					}else{                                                //当屏幕显示不为0
+						result=src_show.text();
+						if(neg==0){                                              //显示为负数时
+						    neg=1;
+						}else if(neg==1){                                      //显示为正数时
+							neg=0;
+						}
+						result=-result;
+						src_show.html(result);
+					}
+				})
+				//数字键
+				num.click(function(){
+					result+=$(this).text();
+					if(neg==0&&src_show.text()=="-0"){
+						src_show.html(-result);
+					}else{
+					    src_show.html(result);
+					}
+				})
+				//四则运算操作
+				calcu.click(function(){
+					result_1=parseFloat(src_show.text());
+					if($(this).hasClass("btn_plus")){
+						change=1;
+					}
+					if($(this).hasClass("btn_minus")){
+						change=2;
+					}
+					if($(this).hasClass("btn_multiplied")){
+						change=3;
+					}
+					if($(this).hasClass("btn_divided")){
+						change=4;
+					}
+					result="";
+					src_show.html("0");
+					neg=1;
+				});
+				//等于操作
+				equal.click(function(){
+					if(result==""){
+						result_1=parseFloat(src_show.text());
+					}else{
+						result_2 = parseFloat(src_show.text());
+					}
+					if(change ==1){
+						result = result_1+result_2;
+					}
+					if(change ==2){
+						result = result_1-result_2;
+					}
+				    if(change ==3){
+						result = result_1*result_2;
+					}
+					if(change ==4){
+						result = result_1/result_2;
+					}
+					src_show.html(result);
+					if(result<0){
+						neg=0;
+					}else{
+						neg=1;
+					}
+					result="";
+				});
+				//清零符
+				reset.click(function(){
+					src_show.html("0");
+					result ="";
+				    result_1="";
+				    result_2 = "";
+				    change=0;
+				    neg=1;
+				});
+				//退格符
+				del.click(function(){
+					if(result.length==1||result==""){               //输入一位数退格
+						result="";
+						if(neg==1){
+							src_show.html("0");
+						}else if(neg==0){
+							src_show.html("-0");
+						}
+					}else{
+						result=result.substr(0,result.length-1);
+						if(neg==1){
+							src_show.html(result);
+						}else if(neg==0){
+							src_show.html(-result);
+						}
+					}
+				})
+			})
+		</script>
+	</body>
+</html>
